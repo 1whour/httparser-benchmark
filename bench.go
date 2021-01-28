@@ -53,6 +53,7 @@ func bench(iterCount int64, silent bool) {
 	}
 
 	p := httparser.New(httparser.REQUEST)
+	fmt.Printf("req_len=%d\n", len(data))
 	for i := int64(0); i < iterCount; i++ {
 		sucess, err := p.Execute(&setting, data)
 		if err != nil {
