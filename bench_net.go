@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"fmt"
-	"github.com/antlabs/httparser"
+	"net/http"
 	"time"
 )
 
@@ -24,44 +26,18 @@ var data = []byte(
 
 var kBytes = int64(8) << 30
 
-var setting = httparser.Setting{
-	MessageBegin: func() {
-	},
-	URL: func(buf []byte) {
-	},
-	Status: func([]byte) {
-		// 响应包才需要用到
-	},
-	HeaderField: func(buf []byte) {
-	},
-	HeaderValue: func(buf []byte) {
-	},
-	HeadersComplete: func() {
-	},
-	Body: func(buf []byte) {
-	},
-	MessageComplete: func() {
-	},
-}
-
 func bench(iterCount int64, silent bool) {
 	var start time.Time
 	if !silent {
 		start = time.Now()
 	}
 
-	p := httparser.New(httparser.REQUEST)
 	fmt.Printf("req_len=%d\n", len(data))
 	for i := int64(0); i < iterCount; i++ {
-		sucess, err := p.Execute(&setting, data)
+		_, err := http.ReadRequest(bufio.NewReader(bytes.NewReader(data)))
 		if err != nil {
 			panic(err.Error())
 		}
-		if sucess != len(data) {
-			panic(fmt.Sprintf("sucess length size:%d", sucess))
-		}
-
-		p.Reset()
 	}
 
 	if !silent {

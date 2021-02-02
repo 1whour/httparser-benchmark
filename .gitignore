@@ -6,6 +6,7 @@ bench
 *.dll
 *.so
 *.dylib
+bench_net
 
 # Test binary, built with `go test -c`
 *.test
