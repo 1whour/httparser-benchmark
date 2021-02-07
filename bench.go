@@ -25,22 +25,22 @@ var data = []byte(
 var kBytes = int64(8) << 30
 
 var setting = httparser.Setting{
-	MessageBegin: func() {
+	MessageBegin: func(*httparser.Parser) {
 	},
-	URL: func(buf []byte) {
+	URL: func(_ *httparser.Parser, buf []byte) {
 	},
-	Status: func([]byte) {
+	Status: func(*httparser.Parser, []byte) {
 		// 响应包才需要用到
 	},
-	HeaderField: func(buf []byte) {
+	HeaderField: func(_ *httparser.Parser, buf []byte) {
 	},
-	HeaderValue: func(buf []byte) {
+	HeaderValue: func(_ *httparser.Parser, buf []byte) {
 	},
-	HeadersComplete: func() {
+	HeadersComplete: func(*httparser.Parser) {
 	},
-	Body: func(buf []byte) {
+	Body: func(_ *httparser.Parser, buf []byte) {
 	},
-	MessageComplete: func() {
+	MessageComplete: func(*httparser.Parser) {
 	},
 }
 
